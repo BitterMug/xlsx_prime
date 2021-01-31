@@ -5,24 +5,33 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        FileInputStream fis=new FileInputStream("/home/bitter/Desktop/vzorek_dat_úloha_SDC.xlsx");
-        XSSFWorkbook wb = new XSSFWorkbook(fis);
-        XSSFSheet sheet = wb.getSheetAt(0);
+        if (args.length == 0) {
+            System.out.println("No file input!");
+            return;
+        }
+        try {
+            FileInputStream fis=new FileInputStream(args[0]);
+            XSSFWorkbook wb = new XSSFWorkbook(fis);
+            XSSFSheet sheet = wb.getSheetAt(0);
 
-        for(Row row: sheet) {               //Iterating through rows
-            Cell cell = row.getCell(1);  //Data will be only in second collum. If not, this will not work.
-            String value = cell.getStringCellValue();
-            if (isValid(value) && isPrime(Integer.parseInt(value))) {
-                System.out.println(value);
+            for(Row row: sheet) {               //Iterating through rows
+                Cell cell = row.getCell(1);  //Data will be only in second collum. If not, this will not work.
+                String value = cell.getStringCellValue();
+                if (isValid(value) && isPrime(Integer.parseInt(value))) {
+                    System.out.println(value);
+                }
             }
+        } catch (FileNotFoundException e) {
+            System.out.println("File can not be opened!");
         }
     }
 
-    private static boolean isValid(String val) {
+    public static boolean isValid(String val) {
 
         try {
             int temp = Integer.parseInt(val);   //Check for error.
@@ -37,7 +46,7 @@ public class Main {
         return false;
     }
 
-    private static boolean isPrime(int val) {
+    public static boolean isPrime(int val) {
 
         boolean isDivisible = false;
         for (int i = 2; i <= val / 2; ++i) {    //Checking if number has any divisor.
