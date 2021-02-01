@@ -4,7 +4,7 @@ This project is an interview assignment and follows specific rules of said assig
 
 Prints all prime numbers from xlsx file in B column. File taken as first argument.
 ```
-java -jar xpsx_primenum file.xlsx
+java -jar xpsx_primenum.jar file.xlsx
 5
 9
 5645657
